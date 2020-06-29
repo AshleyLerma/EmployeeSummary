@@ -58,6 +58,11 @@ function promptUser() {
       message: "What's the Intern's school?",
       when: (userInput) => userInput.role === "Intern",
     },
+    {
+      name: "newEmployee",
+      type: "confirm",
+      message: "Would you like to add another employee?",
+    },
   ]);
 }
 
@@ -70,17 +75,21 @@ promptUser().then((answers) => {
     interns.push(
       new Intern(answers.name, answers.id, answers.email, answers.school)
     );
-    console.log(interns);
   } else if (answers.role === "Engineer") {
     engineers.push(
       new Engineer(answers.name, answers.id, answers.email, answers.github)
     );
-    console.log(engineers);
   } else if (answers.role === "Manager") {
     manager.push(
       new Manager(answers.name, answers.id, answers.email, answers.office)
     );
+  }
+  if (answers.newEmployee === true) {
+    promptUser();
+  } else {
     console.log(manager);
+    console.log(engineers);
+    console.log(interns);
   }
 });
 
