@@ -10,16 +10,9 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+// Create objects for each team member (using the correct classes as blueprints!)
 function promptUser() {
   return inquirer.prompt([
-    {
-      name: "role",
-      type: "checkbox",
-      choices: ["Manager", "Engineer", "Intern"],
-      message: "Please select the employee's role.",
-    },
     {
       name: "name",
       type: "input",
@@ -27,10 +20,40 @@ function promptUser() {
       default: "Employee Name",
     },
     {
+      name: "role",
+      type: "list",
+      choices: ["Manager", "Engineer", "Intern"],
+      message: "Please select the employee's role.",
+    },
+    {
       name: "id",
       type: "input",
       message: "Employee ID:",
       default: "Employee ID",
+    },
+    {
+      name: "email",
+      type: "input",
+      message: "Employee email:",
+      default: "Employee Email",
+    },
+    {
+      name: "office",
+      type: "input",
+      message: "What is the Manager's office number?",
+      when: (userInput) => userInput.role === "Manager",
+    },
+    {
+      name: "github",
+      type: "input",
+      message: "What is the Engineer's GitHub username?",
+      when: (userInput) => userInput.role === "Engineer",
+    },
+    {
+      name: "school",
+      type: "input",
+      message: "What's the Intern's school?",
+      when: (userInput) => userInput.role === "Intern",
     },
   ]);
 }
@@ -44,9 +67,6 @@ promptUser()
     const html = render(answers);
     return writeFileAsync("team.html", html);
   })
-  .then(function () {
-    console.log("Successfully wrote to team.html");
-  })
   .catch(function (err) {
     console.log(err);
   });
@@ -56,10 +76,6 @@ promptUser()
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
