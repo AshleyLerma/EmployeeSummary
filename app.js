@@ -79,6 +79,7 @@ function promptUser() {
                 answers.office
               )
             );
+            break;
           }
           case "Engineer": {
             employees.push(
@@ -89,6 +90,7 @@ function promptUser() {
                 answers.github
               )
             );
+            break;
           }
           case "Intern":
             employees.push(
@@ -99,16 +101,46 @@ function promptUser() {
                 answers.school
               )
             );
+            break;
         }
         // If they say yes to adding more employees reprompt, otherwise render html passing in the employees array
         if (answers.newEmployee === true) {
           promptUser();
         } else {
-          render(employees);
+          const html = render(employees);
+          renderHtml(html);
         }
       })
   );
 }
+// renderHTML by first checking for existing output folder then creating one if none existant
+const renderHtml = (html) => {
+  fs.access(OUTPUT_DIR, function (error) {
+    if (error) {
+      console.log("Directory does not exist. Making Directory.");
+      fs.mkdir(OUTPUT_DIR, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`successfully created.`);
+          writeHtml(html);
+        }
+      });
+    } else {
+      writeHtml(html);
+    }
+  });
+};
+// write to the html file
+const writeHtml = (html) => {
+  fs.writeFile(outputPath, html, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("team.html successfully written");
+    }
+  });
+};
 
 promptUser();
 
