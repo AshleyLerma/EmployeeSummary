@@ -104,11 +104,40 @@ function promptUser() {
         if (answers.newEmployee === true) {
           promptUser();
         } else {
-          render(employees);
+          const html = render(employees);
+          renderHtml(html);
         }
       })
   );
 }
+
+const renderHtml = (html) => {
+  fs.access(OUTPUT_DIR, function (error) {
+    if (error) {
+      console.log("Directory does not exist. Making Directory.");
+      fs.mkdir(OUTPUT_DIR, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`successfully created.`);
+          writeHtml(html);
+        }
+      });
+    } else {
+      writeHtml(html);
+    }
+  });
+};
+
+const writeHtml = (html) => {
+  fs.writeFile(outputPath, html, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("team.html successfully written");
+    }
+  });
+};
 
 promptUser();
 
