@@ -79,6 +79,7 @@ function promptUser() {
                 answers.office
               )
             );
+            break;
           }
           case "Engineer": {
             employees.push(
@@ -89,6 +90,7 @@ function promptUser() {
                 answers.github
               )
             );
+            break;
           }
           case "Intern":
             employees.push(
@@ -99,6 +101,7 @@ function promptUser() {
                 answers.school
               )
             );
+            break;
         }
         // If they say yes to adding more employees reprompt, otherwise render html passing in the employees array
         if (answers.newEmployee === true) {
@@ -110,7 +113,7 @@ function promptUser() {
       })
   );
 }
-
+// renderHTML by first checking for existing output folder then creating one if none existant
 const renderHtml = (html) => {
   fs.access(OUTPUT_DIR, function (error) {
     if (error) {
@@ -128,7 +131,7 @@ const renderHtml = (html) => {
     }
   });
 };
-
+// write to the html file
 const writeHtml = (html) => {
   fs.writeFile(outputPath, html, (err) => {
     if (err) {
