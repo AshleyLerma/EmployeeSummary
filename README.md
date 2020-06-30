@@ -3,7 +3,12 @@
 This is a Node CLI that takes in information about employees and generates an HTML webpage that displays summaries for each person.
 
 See it in action here:
-(Video to come)
+
+![Gif of generator in action](gif/inAction.gif)
+
+Example of final product:
+
+![Img of final product](gif/employeeSumImg.png)
 
 ## Usage
 
